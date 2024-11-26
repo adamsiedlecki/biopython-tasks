@@ -1,4 +1,5 @@
 from Bio.Seq import Seq
+from Bio.SeqUtils import gc_fraction
 my_dna_seq = Seq("AAGAAATTCCAAGTCCAGGGATACACAAACAGGTGTACAGCAAATCATGTAGGTGGTACTTTTCCCCTAAGTTATAATATT")
 
 # Policz wystąpienia każdego nukleotydu
@@ -8,8 +9,7 @@ print("C: " + str(my_dna_seq.count("C")))
 print("G: " + str(my_dna_seq.count("G")))
 
 # zawartość GC
-print(f'GC: {my_dna_seq.count("GC")}')
-gc_percent = "%.2f" % (my_dna_seq.count("GC") / (len(my_dna_seq)/2) * 100)
+gc_percent = "%.2f" % (gc_fraction(my_dna_seq) * 100)
 print(f'gc_percent: {gc_percent}')
 
 # Dokonaj transkrypcji sekwencji do sekwencji RNA.
@@ -25,7 +25,7 @@ my_dna_reverse_compl = my_dna_seq.reverse_complement()
 print(f'my_dna_reverse_compl: {my_dna_reverse_compl}')
 
 #zapis do pliku
-with open("sequence_analysis.txt", "a", encoding="utf-8") as f:
+with open("sequence_analysis.txt", "w", encoding="utf-8") as f:
   print(f"Oryginalna sekwencja DNA: {my_dna_seq}", file=f)
   print("Liczba nukleotydów:")
   print(f"  A: {my_dna_seq.count('A')}", file=f)
