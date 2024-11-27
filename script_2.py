@@ -35,7 +35,7 @@ def find_motifs(seq_record):
 # zad5
 def seq_translation(record):
     min_pro_len = 0 # tak ustawiłem bo w help.csv są ramki z długością zero
-    result = []
+    result = {}
     frame_counter = 1
     rev_frame_counter = 1
     # kod pochodzi z Identifying open reading frames
@@ -46,10 +46,10 @@ def seq_translation(record):
             before_stop_kodon = nuc[frame: frame + length].translate().split("*")[0]
             if len(before_stop_kodon) >= min_pro_len:
                 if strand == 1:
-                    result.append(f'Frame{frame_counter}: {len(before_stop_kodon)}')
+                    result[f'Frame{frame_counter}'] = len(before_stop_kodon)
                     frame_counter += 1
                 else:
-                    result.append(f'RevFrame{rev_frame_counter}: {len(before_stop_kodon)}')
+                    result[f'RevFrame{rev_frame_counter}'] = len(before_stop_kodon)
                     rev_frame_counter += 1
     #print(str(result))
     return str(result)
@@ -66,15 +66,15 @@ with open("sequence_analysis.csv", "w", encoding="utf-8") as f:
     # zad2
     for seq_record in SeqIO.parse("ls_orchid.fasta", "fasta"):
         printValueToFile(seq_record.id, f)
-        printValueToFile(", ", f)
+        printValueToFile(",", f)
         printValueToFile(f'"{count_atcg(seq_record)}"', f)
-        printValueToFile(", ", f)
+        printValueToFile(",", f)
         printValueToFile(f'{get_gc_content(seq_record)}%', f)
-        printValueToFile(", ", f)
+        printValueToFile(",", f)
         printValueToFile(f'"{find_motifs(seq_record)}"', f)
-        printValueToFile(", ", f)
+        printValueToFile(",", f)
         printValueToFile(rev_complement(seq_record), f)
-        printValueToFile(", ", f)
+        printValueToFile(",", f)
         printValueToFile(f'"{seq_translation(seq_record)}"', f)
         print("", file=f) # nowa linia
 
