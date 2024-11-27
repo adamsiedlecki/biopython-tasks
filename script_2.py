@@ -12,7 +12,7 @@ def count_atcg(seq_record):
 
 
 def get_gc_content(seq_record):
-    return gc_fraction(seq_record) * 100
+    return round(gc_fraction(seq_record) * 100, 2) # w help.csv jest chyba błąd, należy pomnożyć * 100 aby to był % - (float between 0 and 1). https://biopython.org/docs/dev/api/Bio.SeqUtils.html
 
 
 def rev_complement(seq_record):
@@ -34,26 +34,23 @@ def find_motifs(seq_record):
 
 # zad5
 def seq_translation(record):
-    min_pro_len = 1
+    min_pro_len = 0 # tak ustawiłem bo w help.csv są ramki z długością zero
     result = []
-    counter = 1
+    frame_counter = 1
+    rev_frame_counter = 1
     # kod pochodzi z Identifying open reading frames
     # https://biopython.org/docs/1.84/Tutorial/chapter_cookbook.html
     for strand, nuc in [(+1, record.seq), (-1, record.seq.reverse_complement())]:
         for frame in range(3):
             length = 3 * ((len(record) - frame) // 3)  # Multiple of three
-            for pro in nuc[frame: frame + length].translate().split("*"):
-                if len(pro) >= min_pro_len:
-                    # print(
-                    #     "%s...%s - length %i, strand %i, frame %i"
-                    #
-                    #     % (pro[:30], pro[-3:], len(pro), strand, frame)
-                    # )
-                    if strand == 1:
-                        result.append(f'Frame{counter}: {len(pro)}')
-                    else:
-                        result.append(f'RevFrame{counter}: {len(pro)}')
-                    counter += 1
+            before_stop_kodon = nuc[frame: frame + length].translate().split("*")[0]
+            if len(before_stop_kodon) >= min_pro_len:
+                if strand == 1:
+                    result.append(f'Frame{frame_counter}: {len(before_stop_kodon)}')
+                    frame_counter += 1
+                else:
+                    result.append(f'RevFrame{rev_frame_counter}: {len(before_stop_kodon)}')
+                    rev_frame_counter += 1
     #print(str(result))
     return str(result)
 
@@ -70,14 +67,14 @@ with open("sequence_analysis.csv", "w", encoding="utf-8") as f:
     for seq_record in SeqIO.parse("ls_orchid.fasta", "fasta"):
         printValueToFile(seq_record.id, f)
         printValueToFile(", ", f)
-        printValueToFile(count_atcg(seq_record), f)
+        printValueToFile(f'"{count_atcg(seq_record)}"', f)
         printValueToFile(", ", f)
-        printValueToFile(get_gc_content(seq_record), f)
+        printValueToFile(f'{get_gc_content(seq_record)}%', f)
         printValueToFile(", ", f)
-        printValueToFile(find_motifs(seq_record), f)
+        printValueToFile(f'"{find_motifs(seq_record)}"', f)
         printValueToFile(", ", f)
         printValueToFile(rev_complement(seq_record), f)
         printValueToFile(", ", f)
-        printValueToFile(seq_translation(seq_record), f)
+        printValueToFile(f'"{seq_translation(seq_record)}"', f)
         print("", file=f) # nowa linia
 
