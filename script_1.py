@@ -35,4 +35,4 @@ with open("sequence_analysis.txt", "w", encoding="utf-8") as f:
   print(f"Zawartość GC: {gc_percent}%", file=f)
   print(f"Transkrybowany RNA: {messenger_rna}", file=f)
   print(f"Translowane białko: {protein_seq}", file=f)
-  print(f"Odwrotne dopełnienie:: {my_dna_reverse_compl}", file=f)
+  print(f"Odwrotne dopełnienie: {my_dna_reverse_compl}", file=f)
