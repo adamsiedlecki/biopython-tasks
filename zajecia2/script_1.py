@@ -22,11 +22,11 @@ for i in range(0, 3):
 # (np. fragmenty pasujących regionów)
 # (zapisz jako komentarz w kodzie)
 
-# Z macierzy koordynat można odczytać dopasowania dwóch sekwencji.
-# Macierz przyrównania dwóch sekwencji ma 2 wiersze o równej długości.
+# Z macierzy koordynat można odczytać dopasowania dwóch sekwencji (lub większej ilości).
+# Macierz przyrównania dwóch sekwencji ma 2 wiersze.
 # W jednym wierszu są indeksy pierwszej sekwencji, a w drugim wierszu odpowiadające im indeksy drugiej sekwencji.
 # W ten sposób można odczytać pasujące fragmenty oraz przerwy (luki).
-# Luki można zidentyfikować po skokach indeksów.
+# Luki można zidentyfikować po skokach indeksów (w drugim wierszu jest np. [2:2]  - czyli pusto).
 
 # 5d Zaimplementuj funkcję liczącą przyrównania, które zawierają co najmniej jedno niedopasowanie
 
