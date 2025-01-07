@@ -19,7 +19,7 @@ for alignment in alignments:
         if f1 == f2:
             matches.append({'fragment': f1, 'alignment': alignment, 'cords': cords})
         else:
-            print("para sie nie zgrała")
+            print("para cords sie nie zgrała")
 
 longest_match = max(matches, key=lambda match: len(match['fragment']))
 print(longest_match['alignment'])

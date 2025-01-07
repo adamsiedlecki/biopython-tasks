@@ -54,5 +54,6 @@ with open("PCR_primers.txt", "w", encoding="utf-8") as f:
     for i in range(0, len(primers["PRIMER_LEFT"])):
         start = primers["PRIMER_LEFT"][i]["COORDS"][0] # początek lewego primera
         end = primers["PRIMER_RIGHT"][i]["COORDS"][0] + primers["PRIMER_RIGHT"][i]["COORDS"][1] # koniec prawego primera
-        printValueToFile(f'{primers["PRIMER_LEFT"][i]["SEQUENCE"]} -- {primers["PRIMER_RIGHT"][i]["SEQUENCE"]} {start} {end}', f)
-        print("", file=f)
+        if start < 100 and end > 250: # zgodnie z treścią zadania - "sekwencji od 100 do 250 nukleotydu"
+            printValueToFile(f'{primers["PRIMER_LEFT"][i]["SEQUENCE"]} -- {primers["PRIMER_RIGHT"][i]["SEQUENCE"]} {start} {end}', f)
+            print("", file=f)
